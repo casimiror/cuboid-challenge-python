@@ -204,7 +204,7 @@ class TestCuboidUpdate:
         new_height = 6
         new_depth = 6
 
-        response = response = test_client.post(
+        response = test_client.post(
             "/cuboids/update",
             data=json.dumps(
                 {
@@ -226,7 +226,7 @@ class TestCuboidUpdate:
         new_width = 6
         new_height = 6
         new_depth = 6
-        response = response = response = test_client.post(
+        response = test_client.post(
             "/cuboids/update",
             data=json.dumps(
                 {
@@ -256,11 +256,28 @@ class TestCuboidDelete:
         return cuboid
 
     @staticmethod
-    def test_should_delete_the_cuboid():
-        response = []
+    def test_should_delete_the_cuboid(test_client, session):
+        cuboid = TestCuboidDelete._before_each(session)
+        response = test_client.post(
+            "/cuboids/delete",
+            data=json.dumps(
+                {
+                    "cuboid_id": cuboid.id,
+                }
+            ),
+            content_type="application/json",
+        )
         assert response.status_code == HTTPStatus.OK
 
     @staticmethod
-    def test_should_return_not_found_if_cuboid_doesnt_exists():
-        response = []
+    def test_should_return_not_found_if_cuboid_doesnt_exists(test_client, session):
+        response = test_client.post(
+            "/cuboids/delete",
+            data=json.dumps(
+                {
+                    "cuboid_id": 1000,
+                }
+            ),
+            content_type="application/json",
+        )
         assert response.status_code == HTTPStatus.NOT_FOUND

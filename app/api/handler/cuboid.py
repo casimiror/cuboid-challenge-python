@@ -80,3 +80,20 @@ def update_cuboid():
         jsonify(cuboid_schema.dump(cuboid.query.get(content["cuboid_id"]))),
         status_code,
     )
+
+
+@cuboid_api.route("/delete", methods=["POST"])
+def delete_cuboid():
+    content = request.json
+    status_code = HTTPStatus.OK
+    cuboid_schema = CuboidSchema()
+
+    cuboid = Cuboid.query.get(content["cuboid_id"])
+    if not cuboid:
+        return {}, HTTPStatus.NOT_FOUND
+
+    db.session.delete(cuboid)
+
+    db.session.commit()
+
+    return {}, status_code
