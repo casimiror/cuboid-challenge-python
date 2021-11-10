@@ -57,7 +57,8 @@ def update_cuboid():
 
     current_volume = 0
     for cubo in bag.cuboids:
-        current_volume += cubo.width * cubo.height * cubo.depth
+        if cubo.id != content["cuboid_id"]:
+            current_volume += cubo.width * cubo.height * cubo.depth
 
     if (
         bag.volume - current_volume

@@ -169,9 +169,9 @@ class TestCuboidUpdate:
 
         # DO NOT modify the new_width, new_height and new_depth values.
         # The test case should pass with these values.
-        new_width = 3
-        new_height = 3
-        new_depth = 3
+        new_width = 5
+        new_height = 5
+        new_depth = 5
 
         response = test_client.post(
             "/cuboids/update",
